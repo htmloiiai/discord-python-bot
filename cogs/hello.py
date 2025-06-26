@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Hello(commands.Cog):
     def __init__(self, bot):
@@ -16,11 +16,11 @@ class Hello(commands.Cog):
     # Slash 指令：/打招呼
     @app_commands.command(name="打招呼", description="跟機器人打個招呼")
     async def greet(self, interaction: discord.Interaction):
-        now = datetime.now()
+        # 使用台灣時間（UTC+8）
+        now = datetime.utcnow() + timedelta(hours=8)
         hour = now.hour
         now_time = now.strftime("%H:%M")
 
-        # 根據時間判斷餐別
         if 5 <= hour < 11:
             meal = "早餐"
         elif 11 <= hour < 17:
@@ -30,7 +30,6 @@ class Hello(commands.Cog):
         else:
             meal = "宵夜"
 
-        # 隨機選擇一句話
         messages = [
             f"嗨嗨 {interaction.user.mention}，你今天要來做什麼呢？",
             f"嗨嗨 {interaction.user.mention}，現在是 {now_time}，你吃過{meal}了嗎？"
