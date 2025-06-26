@@ -34,5 +34,8 @@ bot = MyBot()
 @bot.event
 async def on_ready():
     print(f"✅ Bot 登入為 {bot.user}")
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game(name="運作中"))
 
+
+print("Using Token:", TOKEN[:5] + "..." + TOKEN[-5:])
 bot.run(TOKEN)
