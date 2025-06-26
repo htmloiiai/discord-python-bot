@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bot 狀態檢查/Check bot status</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding-top: 100px; background: #f0f0f0; }
+    #status { font-size: 24px; margin-bottom: 20px; }
+    button { padding: 10px 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <div id="status">狀態：🔄 檢查中.../Checking...</div>
+  <button onclick="checkStatus()">🔁 檢查狀態/Check bot status</button>
+
+  <script>
+    async function checkStatus() {
+      document.getElementById("status").innerText = "狀態：🔄 檢查中.../Checking...";
+      try {
+        const res = await fetch("/api/status");
+        const data = await res.json();
+        if (data.status === "online") {
+          document.getElementById("status").innerText = "狀態：✅ Bot 在線上！/✅ Bot is online";
+        } else {
+          document.getElementById("status").innerText = "狀態：❌ Bot 離線！/❌ Bot is offline";
+        }
+      } catch {
+        document.getElementById("status").innerText = "狀態：⚠️ 無法取得狀態/⚠️ Cannot get status";
+      }
+    }
+
+    window.onload = checkStatus;
+  </script>
+</body>
+</html>
